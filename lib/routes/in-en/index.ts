@@ -34,16 +34,16 @@ export const route: Route = {
     },
     name: '新闻',
     maintainers: ['Harviewang'],
-    description: `| 频道 | type 参数 |
-| --- | --- |
-| 光伏太阳能 | solar |
-| 风电 | wind |
-| 储能 | chuneng |
-| 氢能 | h2 |
-| 充换电 | chd |
+    description: `| 频道       | type 参数 |
+| ---------- | --------- |
+| 光伏太阳能 | solar     |
+| 风电       | wind      |
+| 储能       | chuneng   |
+| 氢能       | h2        |
+| 充换电     | chd       |
 | 新能源综合 | newenergy |
-| 电力 | power |
-| 环保 | huanbao |`,
+| 电力       | power     |
+| 环保       | huanbao   |`,
 
     async handler(ctx) {
         const type = ctx.req.param('type')!;

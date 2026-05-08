@@ -41,8 +41,7 @@ export const route: Route = {
     maintainers: ['E-larex'],
     handler,
     url: 'endfield.hypergryph.com/news',
-    description: `
-| 全部 | 公告    | 活动   | 新闻 |
+    description: `| 全部 | 公告    | 活动   | 新闻 |
 | ---- | ------- | ------ | ---- |
 | ALL  | notices | events | news |`,
 };

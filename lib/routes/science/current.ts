@@ -46,8 +46,8 @@ export const route: Route = {
 |  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |
 |     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
-  -   Using route (\`/science/current/\` + "short name for a journal") to get current issue of a journal from AAAS.
-  -   Leaving it empty (\`/science/current\`) to get update from Science.`,
+- Using route (\`/science/current/\` + "short name for a journal") to get current issue of a journal from AAAS.
+- Leaving it empty (\`/science/current\`) to get update from Science.`,
 };
 
 async function handler(ctx) {

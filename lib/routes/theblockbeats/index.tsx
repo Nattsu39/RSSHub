@@ -146,8 +146,8 @@ export const route: Route = {
 | newsflash | article |
 
 | 全部 | 深度 | 精选 | 热点追踪 |
-| :--: | :--: | :--: | :---: |
-|     | -2  | 1    |  2     |`,
+| :--: | :--: | :--: | :------: |
+|      |  -2  |   1  |     2    |`,
 };
 
 async function handler(ctx) {

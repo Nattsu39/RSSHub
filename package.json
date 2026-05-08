@@ -38,6 +38,7 @@
         "eslint": "eslint --cache . --concurrency auto",
         "format": "oxlint --type-aware --fix . && oxfmt .",
         "format:check": "oxlint --type-aware . && oxfmt . --check",
+        "format:description": "tsx scripts/workflow/format-description.ts",
         "format:staged": "lint-staged",
         "lint": "oxlint --type-aware .",
         "prepare": "husky || true",
@@ -180,6 +181,7 @@
         "eslint-plugin-simple-import-sort": "13.0.0",
         "eslint-plugin-unicorn": "64.0.0",
         "eslint-plugin-yml": "3.3.2",
+        "fast-string-width": "3.0.2",
         "fs-extra": "11.3.5",
         "globals": "17.6.0",
         "got": "15.0.5",
@@ -194,6 +196,9 @@
         "oxlint": "1.62.0",
         "oxlint-plugin-eslint": "1.62.0",
         "oxlint-tsgolint": "0.22.1",
+        "remark": "15.0.1",
+        "remark-gfm": "4.0.1",
+        "remark-pangu": "2.2.0",
         "remark-parse": "11.0.0",
         "tsdown": "0.21.10",
         "typescript": "5.9.3",
@@ -208,6 +213,7 @@
             "oxfmt --no-error-on-unmatched-pattern"
         ],
         "*.{ts,tsx,js,cjs,mjs}": [
+            "tsx scripts/workflow/format-description.ts",
             "oxlint --type-aware --fix",
             "eslint --cache --fix --concurrency auto",
             "oxfmt --no-error-on-unmatched-pattern"
