@@ -25,6 +25,7 @@ const getOriginalImg = (url) => {
     }
 };
 const replaceBreak = (text) => text.replaceAll(/<br><br>|<br>/g, ' ');
+const quoteSeparator = "<hr style='border:0;border-top:1px solid #80808030;margin:12px 0;'>";
 
 const formatText = (item) => {
     let text = item.full_text;
@@ -213,12 +214,13 @@ const ProcessFeed = (ctx, { data = [] }, params = {}) => {
             if (quoteData?.user) {
                 quoteData.full_text = quoteData.full_text || quoteData.text;
                 const author = quoteData.user;
+                if (!readable) {
+                    quote += quoteSeparator;
+                }
                 quote += '<div class="rsshub-quote">';
                 if (readable) {
                     quote += `<br clear='both' /><div style='clear: both'></div>`;
                     quote += `<blockquote style='background: #80808010;border-top:1px solid #80808030;border-bottom:1px solid #80808030;margin:0;padding:5px 20px;'>`;
-                } else {
-                    quote += '<br><br>';
                 }
 
                 if (readable) {
