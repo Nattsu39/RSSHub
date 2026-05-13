@@ -49,9 +49,9 @@ function extractText(node) {
 
 /**
  * @param {{ github: ReturnType<typeof import('@actions/github').getOctokit>, context: typeof import('@actions/github').context, core: typeof import('@actions/core') }} githubScript
- * @returns {Promise<void>}
+ * @returns {Promise<boolean>} true if the issue is invalid, i.e. closed (or already closed) as not_planned, so downstream jobs should skip
  */
-export default async function checkIssue({ github, context, core }) {
+export default async function invalidIssue({ github, context, core }) {
     let issue = context.payload.issue;
     if (!issue) {
         core.info(`Fetching issue #${process.env.ISSUE_NUMBER} (workflow_dispatch)`);
@@ -75,7 +75,7 @@ export default async function checkIssue({ github, context, core }) {
     if (!matched) {
         if (await alreadyCommented(github, issueFacts)) {
             core.info('Already commented, skipping');
-            return;
+            return true;
         }
         core.info('No triage label found, closing as not planned');
         await github.rest.issues.createComment({
@@ -87,7 +87,7 @@ export default async function checkIssue({ github, context, core }) {
             state: 'closed',
             state_reason: 'not_planned',
         });
-        return;
+        return true;
     }
 
     const ast = unified()
@@ -100,16 +100,14 @@ export default async function checkIssue({ github, context, core }) {
 
     switch (matched) {
         case rssBugLabel:
-            await runHeadingCheck(ctx, 'bug report', bugReportTemplate);
-            break;
+            return runHeadingCheck(ctx, 'bug report', bugReportTemplate);
         case rssProposalLabel:
-            await runHeadingCheck(ctx, 'RSS proposal', rssProposalTemplate);
-            break;
+            return runHeadingCheck(ctx, 'RSS proposal', rssProposalTemplate);
         case rssEnhancementLabel:
-            await runHeadingCheck(ctx, 'feature request', featureRequestTemplate);
-            break;
+            return runHeadingCheck(ctx, 'feature request', featureRequestTemplate);
         // no default
     }
+    return false;
 }
 
 async function runHeadingCheck({ github, core, issueFacts, headings }, templateName, template) {
@@ -118,7 +116,7 @@ async function runHeadingCheck({ github, core, issueFacts, headings }, templateN
 
     if (enOk || zhOk) {
         core.info(`${templateName} heading check passed`);
-        return;
+        return false;
     }
 
     const missingEn = template.en.filter((h) => !headings.has(h));
@@ -128,7 +126,7 @@ async function runHeadingCheck({ github, core, issueFacts, headings }, templateN
 
     if (await alreadyCommented(github, issueFacts)) {
         core.info(`${templateName} already commented, skipping`);
-        return;
+        return true;
     }
 
     await github.rest.issues.createComment({
@@ -140,4 +138,5 @@ async function runHeadingCheck({ github, core, issueFacts, headings }, templateN
         state: 'closed',
         state_reason: 'not_planned',
     });
+    return true;
 }
