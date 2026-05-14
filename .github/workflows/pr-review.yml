@@ -90,13 +90,15 @@ jobs:
                           "gh auth*": "allow",
                           "gh pr*": "allow",
                           "gh api*": "allow",
+                          "gh search*": "allow",
                           "grep*": "allow",
                           "git*": "allow",
                           "ls*": "allow",
                           "sed*": "allow",
                           "cat*": "allow",
                           "echo*": "allow",
-                          "head*": "allow"
+                          "head*": "allow",
+                          "base64*": "allow"
                         },
                         "webfetch": "deny"
                       }
